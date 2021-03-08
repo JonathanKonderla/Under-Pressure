@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public float lifeSpan = 1.0f;
 
     //deleted start and update function because I just need a function for when the bullet collides with something
     // useful for damaging whatever the bullet hits because it can access components on the colliding object
@@ -11,6 +12,15 @@ public class Bullet : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         Destroy(gameObject);
+    }
+
+    void Update()
+    {
+        lifeSpan -= Time.deltaTime;
+        if(lifeSpan < 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
 }

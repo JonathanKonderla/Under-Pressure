@@ -15,13 +15,20 @@ public class Shooting : MonoBehaviour
     // for force of bullet with a default value of 20
     public float bulletForce = 20f;
 
+    // for held down firing
+    public float fireRate = 0.5f;
+    private float lastFire = 0.0f;
+
     // Update is called once per frame
     void Update()
     {
+        lastFire += Time.deltaTime;
+
         // Fire1 is a default input binding in Unity and is linked to Left Mouse click
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetButton("Fire1") && lastFire > fireRate)
         {
             Shoot();
+            lastFire = 0.0f;
         }
     }
 
