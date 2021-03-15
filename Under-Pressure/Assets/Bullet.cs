@@ -11,7 +11,8 @@ public class Bullet : MonoBehaviour
     // but this just deletes the bullet for now when it collides
     void OnCollisionEnter2D(Collision2D collision)
     {
-        Destroy(gameObject);
+        if(collision.collider.tag != "Player")
+            Destroy(gameObject);
     }
 
     void Update()

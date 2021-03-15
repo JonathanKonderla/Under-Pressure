@@ -4,19 +4,30 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // deeted start method for this movement script
-
     // variable to control our movement speed set to 5 by default
     public float moveSpeed = 5f;
     // this is a reference to our rigidbody2D component
     public Rigidbody2D rigidbody;
 
     public Camera cam;
+    //bounds of the camera
+    private Vector2 screenBounds;
+    //dimensions of the player
+    private float playerWidth;
+    private float playerHeight;
 
-    // variable for jolding movement input
+    // variable for holding movement input
     Vector2 movement;
 
     Vector2 mousePosition;
+
+    //initialize variables
+    void Start() 
+    {
+        screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
+        playerWidth = transform.GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
+        playerHeight = transform.GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of width / 2
+    }
 
     // when doing this style of movement in unity I'm splitting it into two functions below
 
@@ -48,5 +59,15 @@ public class PlayerMovement : MonoBehaviour
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
 
         rigidbody.rotation = angle;
+    }
+
+    //LateUpdate() is called after Update()
+    void LateUpdate() {
+        Vector3 viewPos = transform.position;
+        //get closest position in bounds
+        viewPos.x = Mathf.Clamp(viewPos.x, -screenBounds.x + playerWidth, screenBounds.x - playerWidth);
+        viewPos.y = Mathf.Clamp(viewPos.y, -screenBounds.y + playerHeight, screenBounds.y - playerHeight);
+        //set the position to that inbound position
+        transform.position = viewPos;
     }
 }
