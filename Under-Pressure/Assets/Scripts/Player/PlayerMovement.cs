@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    // variable to control our movement speed set to 5 by default
-    public float moveSpeed = 5f;
+    // variable to control our movement speed set to 5 by default in GameController script
+    public float moveSpeed = (float)GameController.MoveSpeed;
+    //public float moveSpeed = 5f; <- this is old line of cde but keep it just in case
     // this is a reference to our rigidbody2D component
     public Rigidbody2D rigidbody;
 

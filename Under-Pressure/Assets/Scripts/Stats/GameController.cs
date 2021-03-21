@@ -24,10 +24,9 @@ public class GameController : MonoBehaviour
 
     public static float FireRate { get => fireRate; set => fireRate = value; }
 
+    //used for Lives UI
     public Text livesText;
-
-    //private static Text healthText;
-
+    
     private void Awake()
     {
         if (instance == null)
@@ -39,7 +38,19 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //edits the "Lives:" text in the UI
         livesText.text = "Lives: " + lives;
+
+        // using this to test if lives are affected when damage is taken, can delete when we're done
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            DamagePlayer(1);
+        }
+        // using this to test if lives are healed when a player heals, can delete when we're done
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            HealPlayer(1);
+        }
     }
 
     public static void DamagePlayer(int damage)
