@@ -2,28 +2,42 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//shooting is for player shooting
-public class Shooting : MonoBehaviour
+public class EnemyShooting : MonoBehaviour
 {
-    // references our Player firePoint object
+    public Transform player;
     public Transform firePoint;
-    // references our bullet object that was turned into a prefab
     public GameObject bulletPrefab;
 
-    // for force of bullet with a default value of 20
     public float bulletForce = 20f;
 
-    // for held down firing
-    public float fireRate = 0.5f;
+    //AI firerate
+    public float fireRate = 1f;
     private float lastFire = 0.0f;
+
+    void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+    }
 
     // Update is called once per frame
     void Update()
     {
         lastFire += Time.deltaTime;
 
+        // Determine which direction to rotate towards
+        Vector3 targetDirection = player.position - transform.position;
+
+        Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, bulletForce, 0.0f);
+
+        // Draw a ray pointing at our target in
+        Debug.DrawRay(transform.position, newDirection, Color.red);
+        
+        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, q, bulletForce);
+
         // Fire1 is a default input binding in Unity and is linked to Left Mouse click
-        if(Input.GetButton("Fire1") && lastFire > fireRate)
+        if(lastFire > fireRate)
         {
             Shoot();
             lastFire = 0.0f;
