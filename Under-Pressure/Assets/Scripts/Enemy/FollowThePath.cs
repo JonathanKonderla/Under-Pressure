@@ -34,7 +34,7 @@ public class FollowThePath : MonoBehaviour
         Move();
 	}
 
-    // Method that actually make Enemy walk
+    // Method that actually makes the Enemy walk
     private void Move()
     {
         // If Enemy didn't reach last waypoint it can move

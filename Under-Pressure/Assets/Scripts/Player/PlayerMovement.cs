@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = (float)GameController.MoveSpeed;
     //public float moveSpeed = 5f; <- this is old line of cde but keep it just in case
     // this is a reference to our rigidbody2D component
-    public Rigidbody2D rigidbody;
+    private Rigidbody2D rb;
 
     public Camera cam;
     //bounds of the camera
@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     //initialize variables
     void Start() 
     {
+        rb = GetComponent<Rigidbody2D>();
         screenBounds = cam.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, cam.transform.position.z));
         playerWidth = transform.GetComponent<SpriteRenderer>().bounds.extents.x; //extents = size of width / 2
         playerHeight = transform.GetComponent<SpriteRenderer>().bounds.extents.y; //extents = size of width / 2
@@ -50,16 +51,16 @@ public class PlayerMovement : MonoBehaviour
     void FixedUpdate()
     {
         // accesses rb (rigidbody) with MovePosition function
-        rigidbody.MovePosition(rigidbody.position + movement * moveSpeed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
 
         // subtracting the two vectors of mouse position and player's position
         // now it aims in direction of where mouse is
-        Vector2 lookDirection = mousePosition - rigidbody.position;
+        Vector2 lookDirection = mousePosition - rb.position;
         // Atan2 returns the angle from the x axis to the directional vector thats's pointing from player to mouse position
         // Rad2Deg converts Atan2 results to degrees and "- 90f" subtracts 90 degress
         float angle = Mathf.Atan2(lookDirection.y, lookDirection.x) * Mathf.Rad2Deg - 90f;
 
-        rigidbody.rotation = angle;
+        rb.rotation = angle;
     }
 
     //LateUpdate() is called after Update()

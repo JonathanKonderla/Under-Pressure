@@ -109,6 +109,6 @@ public class WaveSpawner : MonoBehaviour
     void SpawnEnemy (Transform _enemy)
     {
         Debug.Log("spawning Enemy: " + _enemy.name);
-        Instantiate(_enemy, transform.position, transform.rotation);
+        Instantiate(_enemy, Random.insideUnitCircle * 5, transform.rotation);
     }
 }
