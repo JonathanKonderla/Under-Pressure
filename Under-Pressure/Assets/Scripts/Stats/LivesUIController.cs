@@ -18,4 +18,5 @@ public class LivesUIController : MonoBehaviour
 
         heartContainer.GetComponent<Image>().fillAmount = fillValue;
     }
+    
 }
