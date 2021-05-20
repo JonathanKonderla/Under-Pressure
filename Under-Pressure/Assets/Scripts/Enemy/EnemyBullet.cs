@@ -11,7 +11,8 @@ public class EnemyBullet : MonoBehaviour
         if(collision.collider.tag == "Player")
         {
             Destroy(gameObject);
-            GameController.DamagePlayer(1);
+            //LifeSystem.TakeDamage(1); (new line of code im trying to make work)
+            GameController.DamagePlayer(1); //(old line of code used)
         }
     }
 
